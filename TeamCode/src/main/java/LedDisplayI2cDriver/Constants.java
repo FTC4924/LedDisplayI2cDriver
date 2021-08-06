@@ -9,6 +9,7 @@ public class Constants {
     protected static final int BRIGHTNESS_DEFAULT = 0xF;
     protected static final int BLINK_RATE_DEFAULT = 0;
     protected static final boolean FONT_COLOR_DEFAULT = true;
+    protected static final int DEFAULT_LINE_LENGTH = 0;
 
     protected static final int BYTE_LENGTH = 8;
 

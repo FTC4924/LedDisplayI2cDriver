@@ -91,7 +91,8 @@ public class HT16K33 extends I2cDeviceSynchDevice<I2cDeviceSynch> implements I2c
         setFontColor(FONT_COLOR_DEFAULT);
         setBrightness(BRIGHTNESS_DEFAULT);
         setBlinkRate(BLINK_RATE_DEFAULT);
-        clearDisplayBuffer();
+        setLineLength(DEFAULT_LINE_LENGTH);
+        clear();
         writeDisplay();
         displayOn();
 
@@ -157,24 +158,9 @@ public class HT16K33 extends I2cDeviceSynchDevice<I2cDeviceSynch> implements I2c
     }
 
     /**
-     * clears the display.
-     */
-    public void clear() {
-        if(fontColor) {
-            for (byte i = 0; i < DISPLAY_WIDTH * 2; i += 2) {
-                write8(Command.DISPLAY_ADDRESS_POINTER, i, (byte)0);
-            }
-        } else {
-            for (byte i = 0; i < DISPLAY_WIDTH * 2; i += 2) {
-                write8(Command.DISPLAY_ADDRESS_POINTER, i, (byte)0xFF);
-            }
-        }
-    }
-
-    /**
      * Clears the display buffer.
      */
-    public void clearDisplayBuffer() {
+    public void clear() {
         Arrays.fill(displayBuffer, (byte)0);
     }
 

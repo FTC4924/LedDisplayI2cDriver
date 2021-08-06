@@ -44,20 +44,11 @@ public class Display {
     }
 
     /**
-     * clears each of the displayBoards
+     * clears the displayBuffer of each displayBoard
      */
     public void clear() {
         for(HT16K33 displayBoard : displayBoards) {
             displayBoard.clear();
-        }
-    }
-
-    /**
-     * clears each displayBoard's displayBuffer
-     */
-    public void clearDisplayBuffer() {
-        for(HT16K33 displayBoard : displayBoards) {
-            displayBoard.clearDisplayBuffer();
         }
     }
 
