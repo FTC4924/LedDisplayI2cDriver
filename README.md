@@ -72,3 +72,5 @@ private static final byte[][] pandaBitmap = {{
 We are always looking for help in improving are code, and are very open to suggestions. This was the easiest way we found for teams to set this up, 
 though, we looked into how to use maven artifacts, but don't have any experience with them. If anyone could help us do that, it would be much appreciated. Please let us know
 if you find any mistakes, or run in to any problems, we are happy to help.
+Contact us at:
+nrrobotics@gmail.com
