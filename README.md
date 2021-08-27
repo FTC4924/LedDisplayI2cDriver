@@ -9,9 +9,9 @@ An easy straightforward way for FTC teams to control a grid of functional LEDs.
 - Supports changing the blinkrate of the display
 ## Setup
 #### Teams who have github set up for their project:
-1) From your team's program on android studio, got to vcs > git > remotes... then add a remote called LedDisplayI2cDriver with this url https://github.com/FTC4924/LedDisplayI2cDriver.
-2) In command prompt navigate to your project's folder and input the following command
-git pull LedDisplayI2cDriver master --allow-unrelated-histories.
+1) From your team's program on android studio, got to vcs > git > remotes... then add a remote called LedDisplayI2cDriver with this url https://github.com/FTC4924/LedDisplayI2cDriver
+2) In command prompt navigate to your project's folder and input the following command:
+git pull LedDisplayI2cDriver master --allow-unrelated-histories
 3) That should pull the classes from github and now that you've pulled once, you can pull from Android Studio rather than the command prompt.
 4) That's all you need to do for a single display board, but if you want multiple displayBoards on the same I2c bus, there is a little extra. By default the I2c address of each display is 0x70. Since you cannot have two devices with the same I2c address hooked up to the same port, you have to change the I2c address. To do this you both change the I2c address in the software, as shown in the multiple displays example, and you have to change it manually by soughtering the switches on the back of the display. each switch is a digit in binary, that gets added to the 0x70. The switches are labeled with A0, A1, and A2.
 ## Usage and Examples
