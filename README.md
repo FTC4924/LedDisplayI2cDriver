@@ -9,7 +9,7 @@ An easy straightforward way for FTC teams to control a grid of functional LEDs.
 - Supports changing the blinkrate of the display
 ## Setup
 #### Teams who have github set up for their project:
-1) From your team's program on android studio, got to vcs > git > remotes... then add a remote called LedDisplayI2cDriver with this url https://github.com/FTC4924/LedDisplayI2cDriver
+1) From your team's project on android studio(more information on setting up a project [here](https://github.com/FIRST-Tech-Challenge/FtcRobotController)), go to vcs > git > remotes... then add a remote called LedDisplayI2cDriver with this url https://github.com/FTC4924/LedDisplayI2cDriver
 2) In command prompt navigate to your project's folder and input the following command:
 git pull LedDisplayI2cDriver master --allow-unrelated-histories
 3) That should pull the classes from github and now that you've pulled once, you can pull from Android Studio rather than the command prompt.
