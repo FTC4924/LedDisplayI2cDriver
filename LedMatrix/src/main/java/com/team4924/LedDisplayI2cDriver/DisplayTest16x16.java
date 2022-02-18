@@ -27,8 +27,9 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package LedDisplayI2cDriver;
+package com.team4924.LedDisplayI2cDriver;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.I2cAddr;
@@ -36,25 +37,24 @@ import com.qualcomm.robotcore.hardware.I2cAddr;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import LedDisplayI2cDriver.Display;
-import LedDisplayI2cDriver.HT16K33;
-
-import static LedDisplayI2cDriver.Constants.*;
-
 /**
- * This file contains an example of an iterative (Non-Linear) "OpMode".
+ * This file contains an example of a Linear "OpMode".
  * An OpMode is a 'program' that runs in either the autonomous or the teleop period of an FTC match.
  * The names of OpModes appear on the menu of the FTC Driver Station.
- * When an selection is made from the menu, the corresponding OpMode
+ * When a selection is made from the menu, the corresponding OpMode
  * class is instantiated on the Robot Controller and executed.
  *
- * This particular OpMode just executes a basic Tank Drive Teleop for a two wheeled robot
- * It includes all the skeletal structure that all iterative OpModes contain.
+ * This particular OpMode just executes a basic demo for a 4x4 display of HT16K33 displays.
+ * This scrolls a message across the displays and displays a bitmap which can be moved by the dpad and
+ * rotated with the bumpers.
  *
- * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
+ * To use this OpMode, open the project view on the left side of Android Studio, change the dropdown at the top to
+ * project mode, navigate to External Libraries, Gradle: com.team4924:LedDisplayI2cDriver, classes.jar,
+ * com.team4924.LedDisplayI2cDriver, copy DisplayTest16x16 into your teamcode folder, and remove the @Disabled line
+ * on line 57.
  */ 
 
+@Disabled
 @TeleOp(name="Test")
 public class DisplayTest16x16 extends LinearOpMode {
 

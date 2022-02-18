@@ -1,0 +1,127 @@
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+task generateJavadoc(type: Javadoc) {
+
+    doFirst {
+        configurations.compileOnly
+                .filter { it.name.endsWith('.aar') }
+                .each { aar ->
+                    copy {
+                        from zipTree(aar)
+                        include "**/classes.jar"
+                        into "$buildDir/tmp/aarsToJars/${aar.name.replace('.aar', '')}/"
+                    }
+                }
+
+        configurations.implementation
+                .filter { it.name.endsWith('.aar') }
+                .each { aar ->
+                    copy {
+                        from zipTree(aar)
+                        include "**/classes.jar"
+                        into "$buildDir/tmp/aarsToJars/${aar.name.replace('.aar', '')}/"
+                    }
+                }
+    }
+
+    configurations.compileOnly.setCanBeResolved(true)
+    configurations.implementation.setCanBeResolved(true)
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += configurations.compileOnly
+    classpath += configurations.implementation
+    classpath += fileTree(dir: "$buildDir/tmp/aarsToJars/")
+    destinationDir = file("${project.buildDir}/outputs/javadoc/")
+    //failOnError false
+    exclude '**/BuildConfig.java'
+    exclude '**/R.java'
+}
+
+task javadocsJar(type: Jar, dependsOn: generateJavadoc) {
+    //noinspection GroovyAccessibility, GroovyAssignabilityCheck
+    archiveClassifier = 'javadoc'
+    from generateJavadoc.destinationDir
+}
+
+task sourcesJar(type: Jar) {
+    //noinspection GroovyAccessibility, GroovyAssignabilityCheck
+    archiveClassifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+
+def lcl_groupId = project.PUBLISH_GROUP_ID
+def lcl_artifactId = project.PUBLISH_ARTIFACT_ID
+def lcl_version = project.PUBLISH_VERSION
+
+signing {
+    sign publishing.publications
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                artifact sourcesJar
+                artifact javadocsJar
+
+                // The coordinates of the library, being set from variables that
+                // we'll set up in a moment
+                groupId lcl_groupId
+                artifactId lcl_artifactId
+                version lcl_version
+
+                // Self-explanatory metadata for the most part
+                pom {
+                    name = lcl_artifactId
+                    description = 'A driver for FTC robots to display bitmaps and characters on a 8x8 LED matrix.'
+                    // If your project has a dedicated site, use its URL here
+                    url = 'https://github.com/FTC4924/LedDisplayI2cDriver'
+
+                    licenses {
+                        license {
+                            name = 'MIT License'
+                            url = 'http://www.opensource.org/licenses/mit-license.php'
+                            //distribution 'repo'
+                        }
+                    }
+                    developers {
+                        developer {
+                            name = 'Red Beard Pandas, Team 4924'
+                            email = 'nrrobotics@gmail.com'
+                            organization = 'FTC Team 4924'
+                            organizationUrl = 'https://team4924.com'
+                        }
+                    }
+                    // Version control info, if you're using GitHub, follow the format as seen here
+                    scm {
+                        connection = 'scm:git:ssh://github.com:FTC4924/LedDisplayI2cDriver.git'
+                        url = 'https://github.com/FTC4924/LedDisplayI2cDriver/tree/master'
+                    }
+                }
+            }
+        }
+
+        repositories {
+            // The repository to publish to, Sonatype/MavenCentral
+            maven {
+                // This is an arbitrary name, you may also use "MavenCentral" or
+                // any other name that's descriptive for you
+                name = "MavenCentral"
+
+                def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+                def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+                // You only need this if you want to publish snapshots, otherwise just set the URL
+                // to the release repo directly
+                url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
+                // The username and password from local.properties
+                credentials {
+                    username = ossrhUsername
+                    password = ossrhPassword
+                }
+            }
+        }
+    }
+}

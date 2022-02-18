@@ -1,4 +1,4 @@
-package LedDisplayI2cDriver;
+package com.team4924.LedDisplayI2cDriver;
 
 import com.qualcomm.robotcore.hardware.I2cAddr;
 

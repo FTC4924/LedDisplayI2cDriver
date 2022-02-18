@@ -1,4 +1,4 @@
-package LedDisplayI2cDriver;
+package com.team4924.LedDisplayI2cDriver;
 
 import java.util.Arrays;
 
@@ -11,8 +11,14 @@ import com.qualcomm.robotcore.hardware.configuration.annotations.I2cDeviceType;
 
 import org.jetbrains.annotations.NotNull;
 
-import static LedDisplayI2cDriver.Constants.*;
+import static com.team4924.LedDisplayI2cDriver.Constants.*;
 
+/**
+ * A LED 8x8 matrix that supports writing characters or custom bitmaps
+ * to a buffer, writing the buffer to the screen, rotating the display, and scrolling across the display.
+ *
+ * For controlling multiple displays as one display, see {@link Display}
+ */
 @I2cDeviceType
 @DeviceProperties(name = "HT16K33 8x8 LED Display", xmlTag = "HT16K33")
 public class HT16K33 extends I2cDeviceSynchDevice<I2cDeviceSynch> implements I2cAddrConfig {
@@ -31,8 +37,8 @@ public class HT16K33 extends I2cDeviceSynchDevice<I2cDeviceSynch> implements I2c
 
     /**
      * Converts a boolean to a byte. True = 1, False = 0.
-     * @param b the boolean to convert
-     * @return the corresponding byte
+     * @param b The boolean to convert
+     * @return The corresponding byte
      */
     private static byte boolToByte(boolean b) {
         return b ? (byte)1 : (byte)0;
@@ -40,7 +46,7 @@ public class HT16K33 extends I2cDeviceSynchDevice<I2cDeviceSynch> implements I2c
 
     /**
      * Returns an indication of the manufacturer of this device.
-     * @return the device's manufacturer
+     * @return The device's manufacturer
      */
     @Override
     public Manufacturer getManufacturer()
@@ -50,7 +56,7 @@ public class HT16K33 extends I2cDeviceSynchDevice<I2cDeviceSynch> implements I2c
 
     /**
      * Returns a string suitable for display to the user as to the type of device.
-     * @return device name
+     * @return Device name
      */
     @Override
     public String getDeviceName()
@@ -97,12 +103,11 @@ public class HT16K33 extends I2cDeviceSynchDevice<I2cDeviceSynch> implements I2c
         displayOn();
 
         return true;
-
     }
 
     /**
      * Configures a new I2C address to use.
-     * @param newAddress the new I2C address to use
+     * @param newAddress The new I2C address to use
      */
     @Override
     public void setI2cAddress(I2cAddr newAddress) {
@@ -111,7 +116,7 @@ public class HT16K33 extends I2cDeviceSynchDevice<I2cDeviceSynch> implements I2c
 
     /**
      * Returns the I2C address currently in use to communicate with an I2C hardware device.
-     * @return the I2C address currently in use
+     * @return The I2C address currently in use
      */
     @Override
     public I2cAddr getI2cAddress() {
@@ -143,14 +148,14 @@ public class HT16K33 extends I2cDeviceSynchDevice<I2cDeviceSynch> implements I2c
     }
 
     /**
-     * turns the display on.
+     * Turns the display on.
      */
     public void displayOn() {
         displayOn = true;
         write8(Command.DISPLAY_SETUP, (byte)(blinkRate * 2 + boolToByte(true)), (byte)0);
     }
     /**
-     * turns the display off.
+     * Turns the display off.
      */
     public void displayOff() {
         displayOn = false;
@@ -165,8 +170,8 @@ public class HT16K33 extends I2cDeviceSynchDevice<I2cDeviceSynch> implements I2c
     }
 
     /**
-     * Configures the offset of the displays rotation.
-     * @param rotation indicated rotation; accepts 0-3 otherwise defaults to 0
+     * Configures the offset of the display's rotation.
+     * @param rotation Indicated rotation; accepts 0-3 otherwise defaults to 0
      */
     public void setRotationOffset(int rotation) {
         if(rotation >= 0 && rotation <= 3) {
@@ -179,7 +184,7 @@ public class HT16K33 extends I2cDeviceSynchDevice<I2cDeviceSynch> implements I2c
 
     /**
      * Configures the rotation of the display.
-     * @param rotation indicated rotation; accepts 0-3 otherwise defaults to 0
+     * @param rotation Indicated rotation; accepts 0-3 otherwise defaults to 0
      */
     public void setRotation(int rotation) {
         if(rotation >= 0 && rotation <= 3) {
@@ -191,7 +196,7 @@ public class HT16K33 extends I2cDeviceSynchDevice<I2cDeviceSynch> implements I2c
 
     /**
      * Configures the brightness of the entire display.
-     * @param brightness indicated brightness; accepts 0-15 otherwise defaults to 15
+     * @param brightness Indicated brightness; accepts 0-15 otherwise defaults to 15
      *                   15 = maximum brightness, 0 = minimum brightness
      */
     public void setBrightness(int brightness) {
@@ -218,7 +223,7 @@ public class HT16K33 extends I2cDeviceSynchDevice<I2cDeviceSynch> implements I2c
     }
 
     /**
-     * Configures the color of what is drawn on the display
+     * Configures the color of what is drawn on the display.
      * @param color Indicated color
      *              true = on, false = off
      */
@@ -269,7 +274,7 @@ public class HT16K33 extends I2cDeviceSynchDevice<I2cDeviceSynch> implements I2c
     }
 
     /**
-     * writes a custom bitmap to the displayBuffer.
+     * Writes a custom bitmap to the displayBuffer.
      * @param x The x-coordinate of the top left pixel of the bitmap
      * @param y The y-coordinate of the top left pixel of the bitmap
      * @param bitmap The bitmap to be written to the displayBuffer

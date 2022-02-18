@@ -1,0 +1,27 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:7.0.4"
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+subprojects {
+    // Load `publish.properties` file, if it exists.
+    if (file("$project.rootDir/publish.properties").exists()) {
+        def localProperties = new Properties()
+        localProperties.load(new FileInputStream("$project.rootDir/publish.properties"))
+        localProperties.each { prop -> project.ext.set(prop.key, prop.value) }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

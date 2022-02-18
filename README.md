@@ -1,3 +1,5 @@
+[![Maven Central](https://img.shields.io/maven-central/v/com.team4924/LedDisplayI2cDriver.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.team4924%22%20AND%20a:%22LedDisplayI2cDriver%22)
+
 # LedDisplayI2cDriver
 An easy straightforward way for FTC teams to control a grid of functional LEDs.
 ## Features
@@ -6,15 +8,33 @@ An easy straightforward way for FTC teams to control a grid of functional LEDs.
 - Supports changing the x and y position of the character/word/bitmap enabling scrolling
 - Supports rotation of the display
 - Supports changing the brightness of the display
-- Supports changing the blinkrate of the display
+- Supports changing the blink rate of the display
 ## Setup
-#### Teams who have github set up for their project:
-1) From your team's project on android studio(more information on setting up a project [here](https://github.com/FIRST-Tech-Challenge/FtcRobotController)), go to vcs > git > remotes... then add a remote called LedDisplayI2cDriver with this url https://github.com/FTC4924/LedDisplayI2cDriver
-2) In command prompt navigate to your project's folder and input the following command:
-git pull LedDisplayI2cDriver master --allow-unrelated-histories
-3) That should pull the classes from github and now that you've pulled once, you can pull from Android Studio rather than the command prompt.
-4) That's all you need to do for a single display board, but if you want multiple displayBoards on the same I2c bus, there is a little extra. By default the I2c address of each display is 0x70. Since you cannot have two devices with the same I2c address hooked up to the same port, you have to change the I2c address. To do this you both change the I2c address in the software, as shown in the multiple displays example, and you have to change it manually by soughtering the switches on the back of the display. each switch is a digit in binary, that gets added to the 0x70. The switches are labeled with A0, A1, and A2.
+1) From your team's project in Android Studio (more information on setting up a project [here](https://github.com/FIRST-Tech-Challenge/FtcRobotController)), 
+   go to the Project view on the left > Gradle Scripts > `build.gradle` (for the TeamCode module).
+2) Add the following line to your dependencies: 
+   ```groovy
+   dependencies {
+       implementation 'com.team4924:LedDisplayI2cDriver:1.0'
+   }
+   ```
+3) Run a Gradle sync.
+4) If Gradle throws a warning saying `Failed to resolve: com.team4924:LedDisplayI2cDriver:1.0`,
+   add the Maven Central repository to your `build.dependencies.gradle` file and sync again:
+   ```groovy
+   repositories {
+       mavenCentral()
+   }
+   ```
+
+5) That's all you need to do for a single display board, but if you want multiple displayBoards on the same I2c bus,
+   there is a little extra. By default, the I2c address of each display is 0x70. Since you cannot have two devices with
+   the same I2c address hooked up to the same port, you have to change the I2c address. To do this you both change the
+   I2c address in the software, as shown in the multiple displays example, and you have to change it manually by
+   soldering the switches on the back of the display. Each switch is a digit in binary, that gets added to the 0x70.
+   The switches are labeled with A0, A1, and A2.
 ## Usage and Examples
+The following examples are used in [DisplayTest16x16](LedMatrix/src/main/java/com/team4924/LedDisplayI2cDriver/DisplayTest16x16.java)
 ##### Scrolling
 Scrolls "Hello World" across a single display board
 ```java
@@ -73,4 +93,4 @@ We are always looking for help in improving are code, and are very open to sugge
 though, we looked into how to use maven artifacts, but don't have any experience with them. If anyone could help us do that, it would be much appreciated. Please let us know
 if you find any mistakes, or run in to any problems, we are happy to help.
 Contact us at:
-nrrobotics@gmail.com
+[nrrobotics@gmail.com](mailto:nrrobotics@gmail.com)

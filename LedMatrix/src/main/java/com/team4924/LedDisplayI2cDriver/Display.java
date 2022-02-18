@@ -1,9 +1,15 @@
-package LedDisplayI2cDriver;
+package com.team4924.LedDisplayI2cDriver;
 
 import java.util.ArrayList;
 
-import static LedDisplayI2cDriver.Constants.*;
+import static com.team4924.LedDisplayI2cDriver.Constants.*;
 
+/**
+ * A single display made up of multiple {@link HT16K33} displays.
+ * Includes methods for working with all the displays.
+ *
+ * @see HT16K33
+ */
 public class Display {
 
     private final int displayWidth;
@@ -13,11 +19,12 @@ public class Display {
     private final ArrayList<HT16K33> displayBoards;
 
     /**
-     * @param height the height of the display in displayBoards
-     * @param width the width of the display in displayBoards
-     * @param displayBoards the displayBoards ordered from left to right top to bottom
+     * @param height The height of the display in # displays
+     * @param width The width of the display in # displays
+     * @param displayBoards The displays ordered from left to right top to bottom
+     * @see HT16K33
      */
-    public Display(int height, int width, ArrayList<HT16K33>displayBoards) {
+    public Display(int height, int width, ArrayList<HT16K33> displayBoards) {
         this.displayHeight = height;
         this.displayWidth = width;
         this.displayBoards = displayBoards;
@@ -26,7 +33,8 @@ public class Display {
     }
 
     /**
-     * turns each displayBoard on
+     * Turns all displays on
+     * @see HT16K33#displayOn()
      */
     public void displayOn() {
         for(HT16K33 displayBoard : displayBoards) {
@@ -35,7 +43,8 @@ public class Display {
     }
 
     /**
-     * turns each displayBoard off
+     * Turns all displays off
+     * @see HT16K33#displayOff()
      */
     public void displayOff() {
         for(HT16K33 displayBoard : displayBoards) {
@@ -44,7 +53,8 @@ public class Display {
     }
 
     /**
-     * clears the displayBuffer of each displayBoard
+     * Clears the displayBuffer of all displays
+     * @see HT16K33#clear()
      */
     public void clear() {
         for(HT16K33 displayBoard : displayBoards) {
@@ -53,8 +63,9 @@ public class Display {
     }
 
     /**
-     * rotates the display
-     * @param rotation indicated rotation; accepts 0-3 otherwise defaults to 0
+     * Rotates the entire display
+     * @param rotation Indicated rotation; accepts 0-3 otherwise defaults to 0
+     * @see HT16K33#setRotation(int rotation)
      */
     public void setRotation(int rotation) {
         this.rotation = rotation;
@@ -64,8 +75,9 @@ public class Display {
     }
 
     /**
-     * changes the brightness of each displayBoard
-     * @param newBrightness indicated brightness; accepts 0-15 otherwise defaults to 15
+     * Changes the brightness of all displays
+     * @param newBrightness Indicated brightness; accepts 0-15 otherwise defaults to 15
+     * @see HT16K33#setBrightness(int brightness)
      */
     public void setBrightness(int newBrightness) {
         for(HT16K33 displayBoard : displayBoards) {
@@ -79,12 +91,23 @@ public class Display {
         }
     }
 
+    /**
+     * Write the buffers to all displays
+     * @see HT16K33#writeDisplay()
+     */
     public void writeDisplay() {
         for(int i = 0; i < displayBoards.size(); i++) {
             displayBoards.get(i).writeDisplay();
         }
     }
 
+    /**
+     * Write a bitmap across all displays
+     * @param x The x position of the bitmap.
+     * @param y The y position of the bitmap.
+     * @param bitmap The bitmap to display.
+     * @see HT16K33#drawBitmap(int x, int y, byte[][] bitmap)
+     */
     public void drawBitmap(int x, int y, byte[][] bitmap) {
         switch(rotation) {
             case 0:
@@ -126,6 +149,13 @@ public class Display {
         }
     }
 
+    /**
+     * Draw a character across all displays
+     * @param x The x position of the character.
+     * @param y The y position of the character.
+     * @param character The character to display.
+     * @see HT16K33#drawCharacter(int x, int y, char character)
+     */
     public void drawCharacter(int x, int y, char character) {
         switch(rotation) {
             case 0:
@@ -163,6 +193,7 @@ public class Display {
                 break;
         }
     }
+
 
     public void setLineLength(int lineLength) {
         this.lineLength = lineLength;
